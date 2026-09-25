@@ -144,6 +144,8 @@ flowchart LR
 
 ### PART 6 — Futures & Options Engineering (Month 6, first half)
 
+📄 **Detailed lesson plan:** [lessons/PART_06_FUTURES_OPTIONS_ENGINEERING.md](lessons/PART_06_FUTURES_OPTIONS_ENGINEERING.md)
+
 *Original items 12–16.*
 
 | # | Module | Key Topics |
