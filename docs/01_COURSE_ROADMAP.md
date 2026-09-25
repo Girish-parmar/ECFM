@@ -125,6 +125,8 @@ flowchart LR
 
 ### PART 5 — Analytics Library: Patterns, Indicators, Sentiment (Month 5)
 
+📄 **Detailed lesson plan:** [lessons/PART_05_ANALYTICS_LIBRARY.md](lessons/PART_05_ANALYTICS_LIBRARY.md)
+
 *Original items 6–11 and 36–38.*
 
 | # | Module | Key Topics |
