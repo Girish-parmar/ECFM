@@ -235,6 +235,8 @@ flowchart LR
 
 ### PART 11 — AI, NLP & Cowork in Trading (Month 10)
 
+📄 **Detailed lesson plan:** [lessons/PART_11_AI_NLP_COWORK.md](lessons/PART_11_AI_NLP_COWORK.md)
+
 *Expands original "Cowork in trading", "News analysis", "Sentiment analysis" and "Artificial intelligence".*
 
 | # | Module | Key Topics |
