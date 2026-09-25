@@ -96,6 +96,8 @@ flowchart LR
 
 ### PART 3 — Python Engineering for Trading (Months 2–3)
 
+📄 **Detailed lesson plan:** [lessons/PART_03_PYTHON_ENGINEERING.md](lessons/PART_03_PYTHON_ENGINEERING.md)
+
 | # | Module | Key Topics |
 |---|---|---|
 | 3.1 | **Basic Python** | Types, control flow, functions, collections, comprehensions, files, exceptions, modules, virtual environments |
