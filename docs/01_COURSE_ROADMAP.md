@@ -208,6 +208,8 @@ flowchart LR
 
 ### PART 9 — Advanced Statistical Trading (Month 8)
 
+📄 **Detailed lesson plan:** [lessons/PART_09_STATISTICAL_TRADING.md](lessons/PART_09_STATISTICAL_TRADING.md)
+
 *Original "Trade Creation" items 1–4.*
 
 | # | Module | Key Topics |
