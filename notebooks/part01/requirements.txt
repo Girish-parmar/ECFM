@@ -1,0 +1,12 @@
+# Part 1 notebooks (Python 3.12+ recommended; tested with 3.11)
+numpy
+pandas>=2.2
+scipy
+matplotlib
+requests
+jupyterlab
+# tests
+pytest
+nbformat
+nbclient
+ipykernel
