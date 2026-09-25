@@ -190,6 +190,8 @@ flowchart LR
 
 ### PART 8 — Backtesting, Optimization, Risk & Portfolio (Months 7–8)
 
+📄 **Detailed lesson plan:** [lessons/PART_08_BACKTESTING_RISK_PORTFOLIO.md](lessons/PART_08_BACKTESTING_RISK_PORTFOLIO.md)
+
 *Original items 29–35.*
 
 | # | Module | Key Topics |
