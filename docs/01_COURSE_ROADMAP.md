@@ -159,6 +159,8 @@ flowchart LR
 
 ### PART 7 — Strategy Library (Month 6, second half)
 
+📄 **Detailed lesson plan:** [lessons/PART_07_STRATEGY_LIBRARY.md](lessons/PART_07_STRATEGY_LIBRARY.md)
+
 *Original items 17–28. Every strategy is documented with the same template: hypothesis → market regime → entry → exit → sizing → failure modes → expected metrics.*
 
 **7A — Linear Strategy Groups (Stocks, ETFs, Futures, FX)**
