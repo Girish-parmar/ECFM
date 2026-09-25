@@ -221,6 +221,8 @@ flowchart LR
 
 ### PART 10 — Machine Learning, Deep Learning & Reinforcement Learning (Months 9–10)
 
+📄 **Detailed lesson plan:** [lessons/PART_10_MACHINE_LEARNING.md](lessons/PART_10_MACHINE_LEARNING.md)
+
 *Original "Trade Creation" items 5–16. Each group follows the same 4 steps: **Theory → Create Strategy → Advanced Analysis → Optimization**.*
 
 | # | Group | Theory | Create Strategy | Advanced Analysis | Optimization |
