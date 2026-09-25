@@ -85,6 +85,8 @@ flowchart LR
 
 ### PART 2 — Quantitative Toolkit (Month 2, first half)
 
+📄 **Detailed lesson plan:** [lessons/PART_02_QUANT_TOOLKIT.md](lessons/PART_02_QUANT_TOOLKIT.md)
+
 | # | Module | Key Topics |
 |---|---|---|
 | 2.1 | **Math for Quants** | Linear algebra (vectors, matrices, eigen-decomposition, PCA), calculus for optimization, gradient methods, convex optimization basics |
