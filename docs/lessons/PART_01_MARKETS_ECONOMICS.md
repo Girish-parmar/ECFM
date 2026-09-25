@@ -56,7 +56,7 @@ By the end of Part 1 the learner will be able to:
 ## 4. Session-by-Session Plan
 
 > Each session: **15 min recap/theory → 45 min worked examples → 20 min guided lab → 10 min wrap-up and homework.**
-> Excel templates live in `labs/part01/excel/`; ready-to-run notebooks in `notebooks/part01/`.
+> Excel templates live in `labs/part01/excel/`; ready-to-run notebooks in [`notebooks/part01/`](../../notebooks/part01/) (start with `00_environment_check.ipynb`).
 
 ### Week 1 — Orientation & Macroeconomics
 
@@ -269,16 +269,16 @@ By the end of Part 1 the learner will be able to:
 | Artifact | Session | Location | Used again in |
 |---|---|---|---|
 | Release calendar & macro data | S2 | `labs/part01/excel/macro_calendar.xlsx`, `notebooks/part01/01_fred_alfred.ipynb` | Part 5 (sentiment, point-in-time), Part 11 (events) |
-| Fed funds implied probabilities | S3 | `labs/part01/excel/fed_funds.xlsx` | Part 11 (FOMC events) |
+| Fed funds implied probabilities | S3 | `labs/part01/excel/fed_funds.xlsx`, `notebooks/part01/02_macro_dashboard.ipynb` | Part 11 (FOMC events) |
 | Macro regime dashboard | S4 | `labs/part01/excel/macro_regime.xlsx`, `notebooks/part01/02_macro_dashboard.ipynb` | Parts 7, 10 (regimes) |
 | Instrument fact sheets | S5 | `labs/part01/instruments.md` | Part 4 (contract mapping) |
 | Corporate actions & adjusted prices | S6 | `labs/part01/excel/corporate_actions.xlsx` | Part 4 (data cleaning), Part 8 (biases) |
 | Fundamentals comparison & DCF | S7 | `labs/part01/excel/fundamentals.xlsx` | Part 9 (factors), Part 11 (extraction) |
 | Order-book cost & spread measures | S8–S9 | `labs/part01/excel/microstructure.xlsx`, `notebooks/part01/03_spreads.ipynb` | Part 8 (costs), Part 12 (execution) |
-| Futures fair value & margin ledger | S10 | `labs/part01/excel/futures.xlsx` | Part 4 (futures), Part 6 (futures library) |
-| Payoff builder | S12–S13 | `labs/part01/excel/payoff_builder.xlsx` | Part 7 (option strategy builder) |
+| Futures fair value & margin ledger | S10 | `labs/part01/excel/futures.xlsx`, `notebooks/part01/04_derivatives_calculator.ipynb` | Part 4 (futures), Part 6 (futures library) |
+| Payoff builder | S12–S13 | `labs/part01/excel/payoff_builder.xlsx`, `notebooks/part01/04_derivatives_calculator.ipynb` | Part 7 (option strategy builder) |
 | Returns & risk dashboard | S14 | `labs/part01/excel/returns_risk.xlsx` | Part 2 (statistics), Part 8 (performance) |
-| BSM & Greeks sheet | S15 | `labs/part01/excel/bsm_greeks.xlsx` | Part 6 (pricing engine validation) |
+| BSM & Greeks sheet | S15 | `labs/part01/excel/bsm_greeks.xlsx`, cross-check in `notebooks/part01/04_derivatives_calculator.ipynb` | Part 6 (pricing engine validation) |
 
 ---
 
