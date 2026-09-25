@@ -105,6 +105,8 @@ flowchart LR
 
 ### PART 4 — Broker Connectivity & Trading Infrastructure, in Jupyter (Month 4)
 
+📄 **Detailed lesson plan:** [lessons/PART_04_BROKER_CONNECTIVITY.md](lessons/PART_04_BROKER_CONNECTIVITY.md)
+
 *Maps to the original "Advance with Python" items 1–5, 39 and 40.*
 
 | # | Module | Key Topics |
