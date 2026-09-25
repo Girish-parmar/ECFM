@@ -249,6 +249,8 @@ flowchart LR
 
 ### PART 12 — Complete Trading Platform: LLD Capstone (Months 11–12)
 
+📄 **Detailed lesson plan:** [lessons/PART_12_TRADING_PLATFORM_CAPSTONE.md](lessons/PART_12_TRADING_PLATFORM_CAPSTONE.md)
+
 The full design, package map, interfaces and sprint plan are in **[03_PLATFORM_LLD_ROADMAP.md](03_PLATFORM_LLD_ROADMAP.md)**. Summary:
 
 | Layer | Original Items |
