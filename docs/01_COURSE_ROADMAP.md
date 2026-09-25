@@ -70,6 +70,8 @@ flowchart LR
 
 ### PART 1 — Financial Markets & Economic Foundations (Month 1)
 
+📄 **Detailed lesson plan:** [lessons/PART_01_MARKETS_ECONOMICS.md](lessons/PART_01_MARKETS_ECONOMICS.md)
+
 | # | Module | Key Topics | Labs |
 |---|---|---|---|
 | 1.1 | **Macroeconomics for Traders** | GDP, inflation (CPI/PCE), employment (NFP), central banks and the FOMC, interest rates, yield curve and inversions, money supply and liquidity, business cycle, USD and FX drivers, commodities, intermarket analysis (bonds ↔ equities ↔ dollar ↔ gold), economic calendar trading | 🧪 Pull FRED data; build a macro regime dashboard |
