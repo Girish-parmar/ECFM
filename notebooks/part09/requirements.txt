@@ -1,0 +1,12 @@
+# Part 9 notebooks (Python 3.12+ recommended; tested with 3.11).
+numpy
+pandas>=2.2
+scipy
+statsmodels>=0.14
+matplotlib
+jupyterlab
+# tests and notebook builder
+pytest
+nbformat
+nbclient
+ipykernel
