@@ -1,0 +1,12 @@
+# Part 5 notebooks (Python 3.12+ recommended; tested with 3.11). TA-Lib is not needed.
+numpy
+pandas>=2.2
+scipy
+matplotlib
+hypothesis
+jupyterlab
+# tests and notebook builder
+pytest
+nbformat
+nbclient
+ipykernel
