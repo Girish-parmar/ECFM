@@ -57,7 +57,7 @@ These modules become part of `quantforge` in Part 3 (M0) and are reused througho
 ## 4. Session-by-Session Plan
 
 > Each 120-min session: **25 min theory → 60 min worked examples (live notebook) → 25 min guided lab → 10 min wrap-up and homework.**
-> Guided notebooks live in `notebooks/part02/`.
+> Guided notebooks live in [`notebooks/part02/`](../../notebooks/part02/) (instructor solutions in `notebooks/part02/solutions/`).
 
 ### Week 1 — Math & Statistics
 

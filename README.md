@@ -13,6 +13,8 @@ A 12-month advanced program (approx. ₹10,00,000) for quantitative finance and 
 | Folder | Contents |
 |---|---|
 | [notebooks/part01/](notebooks/part01/) | Part 1 starter notebooks (environment check, FRED/ALFRED point-in-time, macro regime dashboard, order books & spreads, futures & options calculator), shared `p1lib.py`, offline fixtures and tests |
+| [notebooks/part02/](notebooks/part02/) | Part 2 guided notebooks (8, one per session) with self-checking exercises, instructor solutions, a synthetic market for offline use, and tests |
+| [labs/part03/](labs/part03/) | Part 3 auto-graded Python labs (weeks 7–11 and clinics W1–W2: Decimal money, time zones, asyncio, FIFO domain model, design patterns, pandas/Polars/Parquet/DuckDB), instructor solutions with a starter generator, and the milestone M0 `quantforge` template |
 
 ## Lesson plans (12 Parts, 12 months)
 
