@@ -46,7 +46,7 @@ No prior programming experience is assumed for weeks 7–8; learners with experi
 
 | Week | Theme | Sessions | Clinic Lab | Output |
 |---|---|---|---|---|
-| **W1** (7) | Python basics (3.1) | S1 Setup, types, numbers & money · S2 Control flow, functions, comprehensions · S3 Collections, strings, dates & time zones · S4 Files, exceptions, modules | Trade-log parser → P&L report | `labs/part03/trade_log/` |
+| **W1** (7) | Python basics (3.1) | S1 Setup, types, numbers & money · S2 Control flow, functions, comprehensions · S3 Collections, strings, dates & time zones · S4 Files, exceptions, modules | Trade-log parser → P&L report | [`labs/part03/clinic_w1_trade_log/`](../../labs/part03/clinic_w1_trade_log/) |
 | **W2** (8) | Advanced Python (3.2) | S5 Iterators, generators, decorators, context managers · S6 Type hints, dataclasses, enums, Pydantic · S7 Concurrency & `asyncio` · S8 Performance & memory | Async quote simulator with back-pressure | Part 2 graded notebook due (end of Month 2) |
 | **W3** (9) | Object-oriented programming (3.3) | S9 Classes, properties, dunder methods · S10 Inheritance, composition, ABCs & protocols · S11 Domain modelling for trading · S12 Errors, testing classes | Domain model with property-based tests | `domain/` draft |
 | **W4** (10) | Low-level design (3.4) | S13 SOLID with trading examples · S14 Patterns I · S15 Patterns II · S16 UML & architecture | UML diagrams + pattern kata | `docs/uml/`, `core/events.py` |
@@ -58,7 +58,7 @@ No prior programming experience is assumed for weeks 7–8; learners with experi
 ## 4. Session-by-Session Plan
 
 > Each session: **15 min recap/theory → 45 min live coding → 20 min guided lab → 10 min wrap-up and homework.**
-> Exercises live in `labs/part03/`; from week 9, code goes into the `quantforge` repository through pull requests.
+> Exercises live in [`labs/part03/`](../../labs/part03/) (auto-graded with `pytest`; see its README); from week 9, code goes into the `quantforge` repository through pull requests, starting from [`labs/part03/m0_template/`](../../labs/part03/m0_template/).
 
 ### Week 1 — Python Basics (3.1, item 3)
 
@@ -687,7 +687,7 @@ class Settings(BaseSettings):
 
 | Artifact | Session(s) | Location | Used again in |
 |---|---|---|---|
-| Trade-log parser | S1–S4 | `labs/part03/trade_log/` | Part 8 (fills reconciliation) |
+| Trade-log parser | S1–S4 | [`labs/part03/clinic_w1_trade_log/`](../../labs/part03/clinic_w1_trade_log/) | Part 8 (fills reconciliation) |
 | Tick generator, `retry`, context managers | S5 | `core/utils.py` | Part 4 (streaming, reconnects) |
 | Pydantic broker messages | S6 | `labs/part03/messages/` | Part 4 (adapters) |
 | Async pipeline & quote simulator | S7 | `labs/part03/async_sim/` | Part 4 (live data), Part 12 (event loop health) |

@@ -1,0 +1,10 @@
+# Part 3 labs (Python 3.12+ recommended; tested with 3.11)
+numpy
+pandas>=2.2
+polars>=1.0
+pyarrow
+duckdb
+pydantic>=2
+pydantic-settings
+pytest
+hypothesis
