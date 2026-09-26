@@ -612,6 +612,8 @@ def test_no_lookahead(name, close):
 
 ## 6. Notebook Map (`notebooks/part05/`)
 
+> The table below is the notebook map for the library build. The offline **guided** notebooks in [`notebooks/part05/`](../../notebooks/part05/) (instructor solutions in `notebooks/part05/solutions/`) cover the same sessions in 8 notebooks: `01_core_indicators` (S1–S2), `02_streaming_indicators` (S3), `03_candles_and_edge` (S4–S5), `04_volatility_and_trend` (S6–S7), `05_vwap_and_timeframes` (S8), `06_levels_and_swings` (S9–S11), `07_actions_and_conditions` (S12), `08_sentiment_and_tails` (S13–S15). S16 (integration and release) is practised through the library-contract audit in notebook 01 and the lab's Clinic W1.
+
 | Notebook | Session | Promoted to |
 |---|---|---|
 | `01_library_registry.ipynb` | S1 | `lib/registry.py`, `lib/helpers.py` |

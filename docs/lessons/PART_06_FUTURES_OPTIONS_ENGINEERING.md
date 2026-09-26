@@ -331,6 +331,8 @@ def delta_hedge_pnl(S0=100., K=100., T=30/365, r=0.04, q=0.0, iv=0.20, rv=0.20,
 
 ## 6. Notebook Map (`notebooks/part06/`)
 
+> Offline **guided** versions of these eight notebooks, with self-checking exercises and data generated from known parameters, are in [`notebooks/part06/`](../../notebooks/part06/) (instructor solutions in `notebooks/part06/solutions/`), one per session: `01_futures_continuous`, `02_option_chain`, `03_pricing_and_greeks`, `04_implied_vol`, `05_second_order_greeks`, `06_numerical_methods`, `07_vol_surface`, `08_portfolio_and_hedging`.
+
 | Notebook | Session | Promoted to |
 |---|---|---|
 | `01_futures_chain_continuous.ipynb` | S1 | `futures/roll.py`, `futures/continuous.py` |

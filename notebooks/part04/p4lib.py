@@ -80,7 +80,7 @@ def check(name: str, got, expected, rtol: float = 1e-6, atol: float = 1e-9):
     lists and dicts); with a tolerance for floats and arrays. Returns your value if correct, else the reference
     (so the notebook keeps running)."""
     try:
-        if got is Ellipsis or (isinstance(got, (tuple, list)) and Ellipsis in got):
+        if got is Ellipsis or (isinstance(got, (tuple, list)) and any(g is Ellipsis for g in got)):
             raise ValueError("not done yet")
         ok = bool(_same(got, expected, rtol, atol))
     except Exception:  # noqa: BLE001 - any failure means "not correct yet"
