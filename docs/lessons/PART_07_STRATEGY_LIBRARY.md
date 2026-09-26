@@ -392,6 +392,8 @@ futures_hedge_contracts(1_000_000, beta=1.1, fut_price=6000, multiplier=50)   # 
 
 ## 7. Notebook Map (`notebooks/part07/`)
 
+> Offline **guided** versions of these eight notebooks, with self-checking exercises on synthetic data with known regimes, are in [`notebooks/part07/`](../../notebooks/part07/) (instructor solutions in `notebooks/part07/solutions/`), one per session: `01_framework_quick_eval`, `02_momentum`, `03_mean_reversion`, `04_vol_math_stat`, `05_option_builder`, `06_directional_options`, `07_range_event_vol`, `08_hedging`.
+
 | Notebook | Session | Promoted to |
 |---|---|---|
 | `01_framework_quick_eval.ipynb` | S1 | `strategy/base.py`, `strategy/registry.py`, `research/quick_eval.py` |
