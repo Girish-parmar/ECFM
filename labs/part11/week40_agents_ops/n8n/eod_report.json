@@ -1,0 +1,138 @@
+{
+ "name": "EOD report",
+ "nodes": [
+  {
+   "id": "weekdays-16:15-et",
+   "name": "Weekdays 16:15 ET",
+   "type": "n8n-nodes-base.scheduleTrigger",
+   "typeVersion": 1.2,
+   "position": [
+    0,
+    300
+   ],
+   "parameters": {
+    "rule": {
+     "interval": [
+      {
+       "field": "cronExpression",
+       "expression": "15 16 * * 1-5"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "daily-report",
+   "name": "Daily report",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    220,
+    300
+   ],
+   "parameters": {
+    "method": "GET",
+    "url": "http://quantforge-api:8000/reports/daily"
+   }
+  },
+  {
+   "id": "format-table",
+   "name": "Format table",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    440,
+    300
+   ],
+   "parameters": {
+    "jsCode": "const r = $json;\nreturn [{json: {text: `P&L ${r.pnl}\\nVaR ${r.var_99}\\nDrawdown ${r.drawdown}`}}];"
+   }
+  },
+  {
+   "id": "email",
+   "name": "Email",
+   "type": "n8n-nodes-base.emailSend",
+   "typeVersion": 2.1,
+   "position": [
+    660,
+    300
+   ],
+   "parameters": {
+    "toEmail": "={{ $env.QF_DESK_EMAIL }}",
+    "subject": "EOD report",
+    "text": "={{ $json.text }}"
+   },
+   "credentials": {
+    "smtp": {
+     "id": "2",
+     "name": "Desk SMTP"
+    }
+   }
+  },
+  {
+   "id": "slack",
+   "name": "Slack",
+   "type": "n8n-nodes-base.slack",
+   "typeVersion": 2.2,
+   "position": [
+    660,
+    300
+   ],
+   "parameters": {
+    "channel": "#desk",
+    "text": "={{ $json.text }}"
+   },
+   "credentials": {
+    "slackApi": {
+     "id": "3",
+     "name": "Desk Slack"
+    }
+   }
+  }
+ ],
+ "connections": {
+  "Weekdays 16:15 ET": {
+   "main": [
+    [
+     {
+      "node": "Daily report",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Daily report": {
+   "main": [
+    [
+     {
+      "node": "Format table",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Format table": {
+   "main": [
+    [
+     {
+      "node": "Email",
+      "type": "main",
+      "index": 0
+     },
+     {
+      "node": "Slack",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "active": false,
+ "settings": {
+  "timezone": "America/New_York",
+  "errorWorkflow": "error_alert"
+ }
+}

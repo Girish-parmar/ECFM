@@ -1,0 +1,140 @@
+{
+ "name": "Pre-market brief",
+ "nodes": [
+  {
+   "id": "weekdays-08:30-et",
+   "name": "Weekdays 08:30 ET",
+   "type": "n8n-nodes-base.scheduleTrigger",
+   "typeVersion": 1.2,
+   "position": [
+    0,
+    300
+   ],
+   "parameters": {
+    "rule": {
+     "interval": [
+      {
+       "field": "cronExpression",
+       "expression": "30 8 * * 1-5"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "premarket-report",
+   "name": "Premarket report",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    220,
+    300
+   ],
+   "parameters": {
+    "method": "GET",
+    "url": "http://quantforge-api:8000/reports/premarket"
+   }
+  },
+  {
+   "id": "news-since-close",
+   "name": "News since close",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    440,
+    300
+   ],
+   "parameters": {
+    "method": "GET",
+    "url": "http://quantforge-api:8000/news/since-close"
+   }
+  },
+  {
+   "id": "summarize",
+   "name": "Summarize",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    660,
+    300
+   ],
+   "parameters": {
+    "method": "POST",
+    "url": "http://quantforge-api:8000/ai/summarize",
+    "sendBody": true,
+    "jsonBody": "={{ JSON.stringify({report: $('Premarket report').item.json, news: $json}) }}"
+   }
+  },
+  {
+   "id": "send-brief",
+   "name": "Send brief",
+   "type": "n8n-nodes-base.telegram",
+   "typeVersion": 1.2,
+   "position": [
+    880,
+    300
+   ],
+   "parameters": {
+    "chatId": "={{ $env.QF_DESK_CHAT }}",
+    "text": "={{ $json.brief }}"
+   },
+   "credentials": {
+    "telegramApi": {
+     "id": "1",
+     "name": "Desk Telegram bot"
+    }
+   }
+  }
+ ],
+ "connections": {
+  "Weekdays 08:30 ET": {
+   "main": [
+    [
+     {
+      "node": "Premarket report",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Premarket report": {
+   "main": [
+    [
+     {
+      "node": "News since close",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "News since close": {
+   "main": [
+    [
+     {
+      "node": "Summarize",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Summarize": {
+   "main": [
+    [
+     {
+      "node": "Send brief",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "active": false,
+ "settings": {
+  "timezone": "America/New_York",
+  "errorWorkflow": "error_alert"
+ }
+}
