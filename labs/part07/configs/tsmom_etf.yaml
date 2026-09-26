@@ -1,0 +1,6 @@
+# Example strategy config (lesson plan, S1). Parameters must be declared by the strategy and inside their ranges.
+strategy: tsmom
+universe: [SPY, QQQ, IWM, EFA, EEM, TLT, IEF, GLD, DBC, UUP]
+timeframe: 1d
+params: {lookback: 252, vol_n: 60, target_vol: 0.10, max_lev: 2.0}
+broker: ib

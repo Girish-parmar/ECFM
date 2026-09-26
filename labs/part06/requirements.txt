@@ -1,0 +1,6 @@
+# Part 6 labs (Python 3.12+ recommended; tested with 3.11)
+numpy
+pandas>=2.2
+scipy>=1.11
+pytest
+# instructors only, to regenerate golden/ and data/:  vollib (tested with vollib 1.0.11)

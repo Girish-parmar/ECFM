@@ -99,7 +99,7 @@ Every strategy ships as: spec (Markdown) + class (Python) + config (YAML) + firs
 ## 6. Session-by-Session Plan
 
 > Each 120-min session: **25 min theory → 60 min live coding → 25 min guided lab → 10 min wrap-up and homework.**
-> Notebooks live in `notebooks/part07/`; promoted code lives in `quantforge/strategy/` and `quantforge/options/strategies/`.
+> Notebooks live in `notebooks/part07/`; promoted code lives in `quantforge/strategy/` and `quantforge/options/strategies/`. Offline, auto-graded exercises for every session and both clinics are in [`labs/part07/`](../../labs/part07/).
 
 ### Week 1 — Framework & Linear Strategy Groups
 
