@@ -53,7 +53,7 @@ By the end of Part 9 the learner will be able to:
 ## 4. Session-by-Session Plan
 
 > Each 120-min session: **25 min theory → 60 min live coding → 25 min guided lab → 10 min wrap-up and homework.**
-> Notebooks live in `notebooks/part09/`; promoted code lives in `quantforge/research/statarb/`.
+> Notebooks live in `notebooks/part09/`; promoted code lives in `quantforge/research/statarb/`. Offline, auto-graded exercises for both weeks and clinics W1 and W2 are in [`labs/part09/`](../../labs/part09/).
 
 ### Week 1 — Mean Reversion & Pairs
 

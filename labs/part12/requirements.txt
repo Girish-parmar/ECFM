@@ -1,0 +1,7 @@
+# Part 12 labs (Python 3.12+ recommended; tested with 3.11). Offline: no broker, Docker or network needed.
+numpy
+pandas>=2.2
+pyyaml               # strategy configs, docker-compose and CI files
+prometheus_client    # metrics exposition
+pytest
+# for the real platform: import-linter, py-spy, memray, Docker Compose, Grafana, Streamlit, IB Gateway/IBC, Alpaca

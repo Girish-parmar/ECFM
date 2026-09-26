@@ -60,7 +60,7 @@ By the end of Part 8 the learner will be able to:
 ## 4. Session-by-Session Plan
 
 > Each session: **15 min recap/theory → 45 min live coding → 20 min guided lab → 10 min wrap-up and homework.**
-> Notebooks live in `notebooks/part08/`; promoted code lives in `quantforge/research/`, `quantforge/risk/`, `quantforge/lib/`, `quantforge/portfolio/`.
+> Notebooks live in `notebooks/part08/`; promoted code lives in `quantforge/research/`, `quantforge/risk/`, `quantforge/lib/`, `quantforge/portfolio/`. Offline, auto-graded exercises for every week and clinics W1, W4 and W6 are in [`labs/part08/`](../../labs/part08/).
 
 ### Week 1 — The Backtest Engine
 

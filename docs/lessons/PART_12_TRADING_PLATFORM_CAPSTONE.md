@@ -61,6 +61,7 @@ By the end of Part 12 the learner will be able to:
 ## 4. Session-by-Session Plan
 
 > Sessions S1–S20: **15 min recap/theory → 45 min live coding → 20 min guided lab → 10 min wrap-up and homework.** S21–S24 are review and presentation sessions.
+> Offline, auto-graded exercises for weeks 41–45 and clinics W2, W3 and W5 (track record and capstone checks) are in [`labs/part12/`](../../labs/part12/).
 
 ### Week 1 — Integration & Performance
 

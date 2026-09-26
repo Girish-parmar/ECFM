@@ -66,7 +66,7 @@ By the end of Part 10 the learner will be able to:
 ## 4. Session-by-Session Plan
 
 > Each session: **15 min recap/theory → 45 min live coding → 20 min guided lab → 10 min wrap-up and homework.**
-> Notebooks live in `notebooks/part10/`; promoted code lives in `quantforge/research/{ml,dl,rl}/`.
+> Notebooks live in `notebooks/part10/`; promoted code lives in `quantforge/research/{ml,dl,rl}/`. Offline, auto-graded exercises for all six weeks and clinics W3, W5 and W6 are in [`labs/part10/`](../../labs/part10/).
 
 ### Week 1 — Data & Features for ML
 

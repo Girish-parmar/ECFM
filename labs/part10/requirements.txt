@@ -1,0 +1,13 @@
+# Part 10 labs (Python 3.12+ recommended; tested with 3.11). CPU is enough for every lab.
+numpy
+pandas>=2.2
+scipy>=1.11
+statsmodels>=0.14      # ADF test
+scikit-learn>=1.6      # FrozenEstimator for calibration
+lightgbm
+hmmlearn               # HMM regimes
+optuna                 # hyperparameter search
+torch                  # deep learning (CPU build is fine)
+gymnasium              # RL environments
+pytest
+# optional: stable-baselines3 (PPO in clinic W6: python rl_defense.py --ppo)

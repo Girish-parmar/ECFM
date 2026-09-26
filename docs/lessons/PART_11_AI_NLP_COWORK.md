@@ -57,7 +57,7 @@ By the end of Part 11 the learner will be able to:
 ## 4. Session-by-Session Plan
 
 > Each 120-min session: **25 min theory → 60 min live coding → 25 min guided lab → 10 min wrap-up and homework.**
-> Notebooks live in `notebooks/part11/`; promoted code lives in `quantforge/research/ai/`, `quantforge/research/news/` and `quantforge/apps/`.
+> Notebooks live in `notebooks/part11/`; promoted code lives in `quantforge/research/ai/`, `quantforge/research/news/` and `quantforge/apps/`. Offline, auto-graded exercises for both weeks and clinics W1 and W2 are in [`labs/part11/`](../../labs/part11/).
 
 ### Week 1 — LLMs, NLP & RAG
 

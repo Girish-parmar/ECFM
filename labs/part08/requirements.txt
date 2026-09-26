@@ -1,0 +1,9 @@
+# Part 8 labs (Python 3.12+ recommended; tested with 3.11)
+numpy
+pandas>=2.2
+scipy>=1.11
+duckdb            # research log
+scikit-learn      # Ledoit-Wolf covariance
+cvxpy             # long-only minimum variance, CVaR linear program
+pytest
+# optional: optuna (drop-in replacement for random_search in the clinics)

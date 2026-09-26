@@ -1,0 +1,140 @@
+{
+ "name": "News alert",
+ "nodes": [
+  {
+   "id": "every-5-minutes",
+   "name": "Every 5 minutes",
+   "type": "n8n-nodes-base.scheduleTrigger",
+   "typeVersion": 1.2,
+   "position": [
+    0,
+    300
+   ],
+   "parameters": {
+    "rule": {
+     "interval": [
+      {
+       "field": "minutes",
+       "minutesInterval": 5
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "scored-headlines",
+   "name": "Scored headlines",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    220,
+    300
+   ],
+   "parameters": {
+    "method": "GET",
+    "url": "http://quantforge-api:8000/news/scored?since=5m"
+   }
+  },
+  {
+   "id": "matters?",
+   "name": "Matters?",
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2,
+   "position": [
+    440,
+    300
+   ],
+   "parameters": {
+    "conditions": {
+     "combinator": "and",
+     "conditions": [
+      {
+       "leftValue": "={{ $json.relevance }}",
+       "rightValue": 0.8,
+       "operator": {
+        "type": "number",
+        "operation": "gt"
+       }
+      },
+      {
+       "leftValue": "={{ Math.abs($json.sentiment) }}",
+       "rightValue": 0.6,
+       "operator": {
+        "type": "number",
+        "operation": "gt"
+       }
+      },
+      {
+       "leftValue": "={{ $json.in_holdings }}",
+       "rightValue": true,
+       "operator": {
+        "type": "boolean",
+        "operation": "true"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "alert",
+   "name": "Alert",
+   "type": "n8n-nodes-base.telegram",
+   "typeVersion": 1.2,
+   "position": [
+    660,
+    300
+   ],
+   "parameters": {
+    "chatId": "={{ $env.QF_DESK_CHAT }}",
+    "text": "={{ $json.ticker }} {{ $json.headline }} (sentiment {{ $json.sentiment }}, position {{ $json.position }})"
+   },
+   "credentials": {
+    "telegramApi": {
+     "id": "1",
+     "name": "Desk Telegram bot"
+    }
+   }
+  }
+ ],
+ "connections": {
+  "Every 5 minutes": {
+   "main": [
+    [
+     {
+      "node": "Scored headlines",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Scored headlines": {
+   "main": [
+    [
+     {
+      "node": "Matters?",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Matters?": {
+   "main": [
+    [
+     {
+      "node": "Alert",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "active": false,
+ "settings": {
+  "timezone": "America/New_York",
+  "errorWorkflow": "error_alert"
+ }
+}

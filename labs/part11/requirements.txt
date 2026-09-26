@@ -1,0 +1,10 @@
+# Part 11 labs (Python 3.12+ recommended; tested with 3.11). Offline: no API key needed for the tests.
+numpy
+pandas>=2.2
+scikit-learn            # TF-IDF + SVD stand-in for sentence-transformers embeddings
+anthropic>=1.0          # response types (recorded responses are real anthropic Message objects)
+pydantic>=2
+fastapi                 # the platform API that n8n calls
+httpx                   # FastAPI TestClient
+pytest
+# for live runs outside the tests: an ANTHROPIC_API_KEY, sentence-transformers, PostgreSQL + pgvector, n8n (Docker)
