@@ -70,7 +70,7 @@ Every function takes `cp = +1` (call) or `−1` (put). **Black-76** (futures opt
 ## 5. Session-by-Session Plan
 
 > Each 120-min session: **25 min theory → 60 min live coding → 25 min guided lab → 10 min wrap-up and homework.**
-> Notebooks live in `notebooks/part06/`; promoted code lives in `quantforge/futures/` and `quantforge/options/`.
+> Notebooks live in `notebooks/part06/`; promoted code lives in `quantforge/futures/` and `quantforge/options/`. Offline, auto-graded exercises for every session and both clinics (checked against vollib) are in [`labs/part06/`](../../labs/part06/).
 
 ### Week 1 — Futures, Chains, Pricing, Implied Volatility
 
