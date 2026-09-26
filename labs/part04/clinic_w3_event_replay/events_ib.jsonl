@@ -1,0 +1,15 @@
+{"broker": "ib", "type": "orderStatus", "orderRef": "br-1-entry", "status": "PreSubmitted", "filled": 0, "remaining": 10}
+{"broker": "ib", "type": "orderStatus", "orderRef": "br-1-entry", "status": "Submitted", "filled": 0, "remaining": 10}
+{"broker": "ib", "type": "execDetails", "orderRef": "br-1-entry", "execId": "0000e1.01", "shares": 4, "price": 500.0, "side": "BOT"}
+{"broker": "ib", "type": "orderStatus", "orderRef": "br-1-entry", "status": "Submitted", "filled": 4, "remaining": 6}
+{"broker": "ib", "type": "execDetails", "orderRef": "br-1-entry", "execId": "0000e1.01", "shares": 4, "price": 500.0, "side": "BOT"}
+{"broker": "ib", "type": "orderStatus", "orderRef": "br-1-entry", "status": "Filled", "filled": 10, "remaining": 0}
+{"broker": "ib", "type": "execDetails", "orderRef": "br-1-entry", "execId": "0000e2.01", "shares": 6, "price": 499.95, "side": "BOT"}
+{"broker": "ib", "type": "orderStatus", "orderRef": "br-1-tp", "status": "PreSubmitted", "filled": 0, "remaining": 10}
+{"broker": "ib", "type": "orderStatus", "orderRef": "br-1-sl", "status": "PreSubmitted", "filled": 0, "remaining": 10}
+{"broker": "ib", "type": "execDetails", "orderRef": "br-1-tp", "execId": "0000e3.01", "shares": 5, "price": 502.0, "side": "SLD"}
+{"broker": "ib", "type": "orderStatus", "orderRef": "br-1-tp", "status": "Submitted", "filled": 5, "remaining": 5}
+{"broker": "ib", "type": "execDetails", "orderRef": "br-1-tp", "execId": "0000e4.01", "shares": 5, "price": 502.1, "side": "SLD"}
+{"broker": "ib", "type": "orderStatus", "orderRef": "br-1-tp", "status": "Filled", "filled": 10, "remaining": 0}
+{"broker": "ib", "type": "orderStatus", "orderRef": "br-1-sl", "status": "Cancelled", "filled": 0, "remaining": 10}
+{"broker": "ib", "type": "orderStatus", "orderRef": "br-1-sl", "status": "Cancelled", "filled": 0, "remaining": 10}

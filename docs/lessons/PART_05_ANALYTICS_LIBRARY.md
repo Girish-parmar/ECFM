@@ -80,7 +80,7 @@ By the end of Part 5 the learner will be able to:
 ## 5. Session-by-Session Plan
 
 > Each session: **15 min recap/theory → 45 min live coding → 20 min guided lab → 10 min wrap-up and homework.**
-> Notebooks live in `notebooks/part05/`; promoted code lives in `quantforge/lib/`.
+> Notebooks live in `notebooks/part05/`; promoted code lives in `quantforge/lib/`. Offline, auto-graded exercises for every week and all four clinics (golden-tested against TA-Lib) are in [`labs/part05/`](../../labs/part05/).
 
 ### Week 1 — Library Design, Core Indicators, Candlesticks
 

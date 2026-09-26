@@ -59,7 +59,7 @@ By the end of Part 4 the learner will be able to:
 ## 4. Session-by-Session Plan
 
 > Each session: **15 min recap/theory → 45 min live coding → 20 min guided lab → 10 min wrap-up and homework.**
-> Notebooks live in `notebooks/part04/`; promoted code lives in `quantforge/`.
+> Notebooks live in `notebooks/part04/`; promoted code lives in `quantforge/`. Offline, auto-graded exercises for every week and the W3–W4 clinics, plus paper-account scripts for W1–W2, are in [`labs/part04/`](../../labs/part04/).
 
 ### Week 1 — Environment & Broker Foundations
 

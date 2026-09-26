@@ -1,0 +1,10 @@
+{"broker": "alpaca", "event": "pending_new", "order": {"client_order_id": "br-1-entry", "status": "pending_new"}}
+{"broker": "alpaca", "event": "partial_fill", "order": {"client_order_id": "br-1-entry", "status": "partially_filled"}, "execution_id": "a1", "qty": "4", "price": "500.00"}
+{"broker": "alpaca", "event": "new", "order": {"client_order_id": "br-1-entry", "status": "new"}}
+{"broker": "alpaca", "event": "partial_fill", "order": {"client_order_id": "br-1-entry", "status": "partially_filled"}, "execution_id": "a1", "qty": "4", "price": "500.00"}
+{"broker": "alpaca", "event": "fill", "order": {"client_order_id": "br-1-entry", "status": "filled"}, "execution_id": "a2", "qty": "6", "price": "499.95"}
+{"broker": "alpaca", "event": "new", "order": {"client_order_id": "br-1-tp", "status": "new"}}
+{"broker": "alpaca", "event": "new", "order": {"client_order_id": "br-1-sl", "status": "new"}}
+{"broker": "alpaca", "event": "partial_fill", "order": {"client_order_id": "br-1-tp", "status": "partially_filled"}, "execution_id": "a3", "qty": "5", "price": "502.00"}
+{"broker": "alpaca", "event": "fill", "order": {"client_order_id": "br-1-tp", "status": "filled"}, "execution_id": "a4", "qty": "5", "price": "502.10"}
+{"broker": "alpaca", "event": "canceled", "order": {"client_order_id": "br-1-sl", "status": "canceled"}}

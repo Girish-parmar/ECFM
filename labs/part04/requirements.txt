@@ -1,0 +1,10 @@
+# Part 4 labs (Python 3.12+ recommended; tested with 3.11, ib_async 2.1, alpaca-py 0.44)
+ib_async
+alpaca-py
+numpy
+pandas>=2.2
+pyarrow
+pydantic>=2
+pydantic-settings
+pytest
+hypothesis

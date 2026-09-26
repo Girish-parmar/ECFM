@@ -1,0 +1,8 @@
+__pycache__/
+.hypothesis/
+.pytest_cache/
+*.parquet
+report.json
+.env
+data/
+state/

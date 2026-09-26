@@ -1,0 +1,26 @@
+[
+ {
+  "client_order_id": "br-1-entry",
+  "symbol": "SPY",
+  "side": "BUY",
+  "qty": "10",
+  "type": "LMT",
+  "limit_price": "500.00"
+ },
+ {
+  "client_order_id": "br-1-tp",
+  "symbol": "SPY",
+  "side": "SELL",
+  "qty": "10",
+  "type": "LMT",
+  "limit_price": "502.00"
+ },
+ {
+  "client_order_id": "br-1-sl",
+  "symbol": "SPY",
+  "side": "SELL",
+  "qty": "10",
+  "type": "STP",
+  "stop_price": "499.00"
+ }
+]
