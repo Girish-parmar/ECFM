@@ -59,6 +59,7 @@ No prior programming experience is assumed for weeks 7–8; learners with experi
 
 > Each session: **15 min recap/theory → 45 min live coding → 20 min guided lab → 10 min wrap-up and homework.**
 > Exercises live in [`labs/part03/`](../../labs/part03/) (auto-graded with `pytest`; see its README); from week 9, code goes into the `quantforge` repository through pull requests, starting from [`labs/part03/m0_template/`](../../labs/part03/m0_template/).
+> Guided notebooks for exploring each topic live in [`notebooks/part03/`](../../notebooks/part03/) (instructor solutions in `notebooks/part03/solutions/`).
 
 ### Week 1 — Python Basics (3.1, item 3)
 

@@ -1,0 +1,16 @@
+# Part 3 notebooks (Python 3.12+ recommended; tested with 3.11)
+numpy
+pandas>=2.2
+matplotlib
+pydantic>=2
+numba
+polars
+duckdb
+pyarrow
+hypothesis
+jupyterlab
+# tests and notebook builder
+pytest
+nbformat
+nbclient
+ipykernel
