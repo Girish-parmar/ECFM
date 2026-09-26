@@ -1,0 +1,7 @@
+# Part 7 labs (Python 3.12+ recommended; tested with 3.11)
+numpy
+pandas>=2.2
+scipy>=1.11
+pyyaml
+ib_async          # only to build combo (BAG) contracts offline; nothing is sent
+pytest
