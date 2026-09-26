@@ -13,6 +13,7 @@ A 12-month advanced program (approx. ₹10,00,000) for quantitative finance and 
 | Folder | Contents |
 |---|---|
 | [notebooks/part01/](notebooks/part01/) | Part 1 starter notebooks (environment check, FRED/ALFRED point-in-time, macro regime dashboard, order books & spreads, futures & options calculator), shared `p1lib.py`, offline fixtures and tests |
+| [notebooks/part02/](notebooks/part02/) | Part 2 guided notebooks (8, one per session) with self-checking exercises, instructor solutions, a synthetic market for offline use, and tests |
 
 ## Lesson plans (12 Parts, 12 months)
 
