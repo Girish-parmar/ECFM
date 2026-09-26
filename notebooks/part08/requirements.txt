@@ -1,0 +1,11 @@
+# Part 8 notebooks (Python 3.12+ recommended; tested with 3.11). duckdb, scikit-learn and cvxpy are not needed.
+numpy
+pandas>=2.2
+scipy
+matplotlib
+jupyterlab
+# tests and notebook builder
+pytest
+nbformat
+nbclient
+ipykernel

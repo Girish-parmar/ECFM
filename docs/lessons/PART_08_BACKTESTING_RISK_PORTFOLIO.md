@@ -565,6 +565,8 @@ def hrp(returns: pd.DataFrame) -> pd.Series:
 
 ## 5. Notebook Map (`notebooks/part08/`)
 
+> The table below is the notebook map for the platform build. Offline **guided** notebooks with self-checking exercises on data with a known truth are in [`notebooks/part08/`](../../notebooks/part08/) (instructor solutions in `notebooks/part08/solutions/`): 12 notebooks, two sessions each, from `01_research_log_and_engine` (S1–S2) to `12_risk_based_allocation` (S23–S24).
+
 | Notebook | Session(s) | Promoted to |
 |---|---|---|
 | `01_research_log.ipynb` | S1 | `research/log.py` |
