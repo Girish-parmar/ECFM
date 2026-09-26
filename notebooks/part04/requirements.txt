@@ -1,0 +1,12 @@
+# Part 4 notebooks (Python 3.12+ recommended; tested with 3.11). No broker SDK is needed: the data is synthetic.
+numpy
+pandas>=2.2
+matplotlib
+pydantic>=2
+hypothesis
+jupyterlab
+# tests and notebook builder
+pytest
+nbformat
+nbclient
+ipykernel

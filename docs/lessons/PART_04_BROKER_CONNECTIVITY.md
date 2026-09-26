@@ -59,7 +59,7 @@ By the end of Part 4 the learner will be able to:
 ## 4. Session-by-Session Plan
 
 > Each session: **15 min recap/theory → 45 min live coding → 20 min guided lab → 10 min wrap-up and homework.**
-> Notebooks live in `notebooks/part04/`; promoted code lives in `quantforge/`. Offline, auto-graded exercises for every week and the W3–W4 clinics, plus paper-account scripts for W1–W2, are in [`labs/part04/`](../../labs/part04/).
+> Notebooks live in `notebooks/part04/`; promoted code lives in `quantforge/`. Offline guided notebooks with self-checking exercises (8, one or two sessions each) are in [`notebooks/part04/`](../../notebooks/part04/), with instructor solutions in `notebooks/part04/solutions/`. Offline, auto-graded exercises for every week and the W3–W4 clinics, plus paper-account scripts for W1–W2, are in [`labs/part04/`](../../labs/part04/).
 
 ### Week 1 — Environment & Broker Foundations
 
@@ -633,6 +633,8 @@ async def test_duplicate_client_order_id_is_not_sent_twice(adapter, far_limit_bu
 ---
 
 ## 5. Notebook Map (`notebooks/part04/`)
+
+> The table below is the notebook map for the platform build (connected to paper accounts). The offline **guided** notebooks in [`notebooks/part04/`](../../notebooks/part04/) cover the same sessions in 8 notebooks: `01_env_config_secrets` (S1–S2), `02_contracts_and_accounts` (S3–S4), `03_historical_data` (S5–S6), `04_live_bars_and_cache` (S7–S8), `05_connections` (S9), `06_order_mapping` (S10), `07_order_lifecycle` (S11–S12), `08_safety_multiasset` (S13–S16).
 
 | Notebook | Session | Promoted to |
 |---|---|---|
