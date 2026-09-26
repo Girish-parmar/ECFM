@@ -16,6 +16,7 @@ A 12-month advanced program (approx. ₹10,00,000) for quantitative finance and 
 | [notebooks/part02/](notebooks/part02/) | Part 2 guided notebooks (8, one per session) with self-checking exercises, instructor solutions, a synthetic market for offline use, and tests |
 | [labs/part03/](labs/part03/) | Part 3 auto-graded Python labs (weeks 7–11 and clinics W1–W2: Decimal money, time zones, asyncio, FIFO domain model, design patterns, pandas/Polars/Parquet/DuckDB), instructor solutions with a starter generator, and the milestone M0 `quantforge` template |
 | [labs/part04/](labs/part04/) | Part 4 offline auto-graded broker labs (weeks 13–16 and clinics W3–W4: IB/Alpaca contract and order mapping with the real SDK objects, pacing, canonical bars, order state tracking, reconciliation, simulated broker with contract tests, kill switch and drill), paper-account scripts for clinics W1–W2, and instructor solutions |
+| [labs/part05/](labs/part05/) | Part 5 offline auto-graded analytics-library labs (weeks 17–20 and clinics W1–W4: indicator registry, core indicators golden-tested against TA-Lib, streaming indicators, candlestick and chart patterns with confirmation indices, edge testing with BH-FDR, volatility estimators, sentiment and point-in-time joins, EVT tail risk), instructor solutions |
 
 ## Lesson plans (12 Parts, 12 months)
 

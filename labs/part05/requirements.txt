@@ -1,0 +1,7 @@
+# Part 5 labs (Python 3.12+ recommended; tested with 3.11)
+numpy
+pandas>=2.2
+scipy>=1.11
+pytest
+hypothesis
+# instructors only, to regenerate golden/*.npz:  TA-Lib (tested with the 0.6 C library via the TA-Lib 0.8.1 wheel)
