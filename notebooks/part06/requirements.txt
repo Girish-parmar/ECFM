@@ -1,0 +1,11 @@
+# Part 6 notebooks (Python 3.12+ recommended; tested with 3.11). py_vollib is not needed.
+numpy
+pandas>=2.2
+scipy
+matplotlib
+jupyterlab
+# tests and notebook builder
+pytest
+nbformat
+nbclient
+ipykernel
