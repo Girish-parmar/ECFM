@@ -541,6 +541,8 @@ class TradingEnv(gym.Env):
 
 ## 5. Notebook Map (`notebooks/part10/`)
 
+> The table below is the notebook map for the platform build. Offline **guided** notebooks with self-checking exercises on data with a known structure are in [`notebooks/part10/`](../../notebooks/part10/) (instructor solutions in `notebooks/part10/solutions/`): 12 notebooks, two sessions each, from `01_baseline_bars` (S1–S2) to `12_rl_agents_execution` (S23–S24).
+
 | Notebook | Session(s) | Promoted to |
 |---|---|---|
 | `01_framing_baseline.ipynb` | S1 | `research/ml/baseline.py` |

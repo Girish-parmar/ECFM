@@ -1,0 +1,14 @@
+# Part 10 notebooks (Python 3.12+ recommended; tested with 3.11). CPU is enough for every notebook.
+numpy
+pandas>=2.2
+scipy
+statsmodels>=0.14
+scikit-learn>=1.6      # FrozenEstimator for calibration
+torch                  # notebooks 09 and 10 only (the CPU build is fine)
+matplotlib
+jupyterlab
+# tests and notebook builder
+pytest
+nbformat
+nbclient
+ipykernel
