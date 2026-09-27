@@ -253,6 +253,8 @@ def fama_macbeth(returns: pd.DataFrame, exposures: dict[str, pd.DataFrame]):
 
 ## 5. Notebook Map (`notebooks/part09/`)
 
+> The table below is the notebook map for the platform build. Offline **guided** notebooks with self-checking exercises on data with known parameters are in [`notebooks/part09/`](../../notebooks/part09/) (instructor solutions in `notebooks/part09/solutions/`): 8 notebooks, one per session, with the file names below.
+
 | Notebook | Session | Promoted to |
 |---|---|---|
 | `01_ou_bayes.ipynb` | S1 | `research/statarb/ou.py`, `analytics/bayes.py` |

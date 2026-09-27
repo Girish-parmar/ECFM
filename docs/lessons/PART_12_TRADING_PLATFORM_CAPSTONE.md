@@ -555,6 +555,8 @@ jobs:
 
 ## 5. Notebook & Artifact Map
 
+> The table below maps the platform artifacts. Offline **guided** notebooks with self-checking exercises on synthetic data with known answers are in [`notebooks/part12/`](../../notebooks/part12/) (instructor solutions in `notebooks/part12/solutions/`): 10 notebooks, two sessions each, from `01_architecture_latency` (S1–S2) to `10_incidents_track_record` (S19–S20, plus the track record, weekly reviews and graduation of weeks 6–8).
+
 | Artifact | Session | Location |
 |---|---|---|
 | Architecture rules, gap register | S1 | `.importlinter`, `docs/gaps.md` |

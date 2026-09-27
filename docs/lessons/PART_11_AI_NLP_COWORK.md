@@ -409,6 +409,8 @@ async def trip(request: Request, x_timestamp: str = Header(...), x_signature: st
 
 ## 5. Notebook Map (`notebooks/part11/`)
 
+> The table below is the notebook map for the platform build. Offline **guided** notebooks with self-checking exercises on recorded model responses and synthetic data with known answers are in [`notebooks/part11/`](../../notebooks/part11/) (instructor solutions in `notebooks/part11/solutions/`): 8 notebooks, one per session, with the file names below.
+
 | Notebook | Session | Promoted to |
 |---|---|---|
 | `01_llm_extraction.ipynb` | S1 | `research/ai/extract.py`, `research/ai/schemas.py` |

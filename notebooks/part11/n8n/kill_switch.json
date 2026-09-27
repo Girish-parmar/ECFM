@@ -1,0 +1,174 @@
+{
+ "name": "Kill switch",
+ "nodes": [
+  {
+   "id": "telegram-/kill",
+   "name": "Telegram /kill",
+   "type": "n8n-nodes-base.telegramTrigger",
+   "typeVersion": 1.1,
+   "position": [
+    0,
+    300
+   ],
+   "parameters": {
+    "updates": [
+     "message"
+    ]
+   },
+   "credentials": {
+    "telegramApi": {
+     "id": "1",
+     "name": "Desk Telegram bot"
+    }
+   }
+  },
+  {
+   "id": "sender-allowed?",
+   "name": "Sender allowed?",
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2,
+   "position": [
+    220,
+    300
+   ],
+   "parameters": {
+    "conditions": {
+     "combinator": "and",
+     "conditions": [
+      {
+       "leftValue": "={{ $env.QF_KILL_ALLOW.split(',').includes(String($json.message.from.id)) }}",
+       "rightValue": true,
+       "operator": {
+        "type": "boolean",
+        "operation": "true"
+       }
+      },
+      {
+       "leftValue": "={{ $json.message.text }}",
+       "rightValue": "/kill",
+       "operator": {
+        "type": "string",
+        "operation": "startsWith"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "sign-request",
+   "name": "Sign request",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    440,
+    300
+   ],
+   "parameters": {
+    "jsCode": "const crypto = require('crypto');\nconst body = JSON.stringify({reason: $json.message.text.slice(6) || 'manual', flatten: true});\nconst ts = String(Math.floor(Date.now() / 1000));\nconst sig = crypto.createHmac('sha256', $env.QF_N8N_SECRET).update(ts + '.' + body).digest('hex');\nreturn [{json: {body, ts, sig}}];"
+   }
+  },
+  {
+   "id": "trip-kill-switch",
+   "name": "Trip kill switch",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    660,
+    300
+   ],
+   "parameters": {
+    "method": "POST",
+    "url": "http://quantforge-api:8000/killswitch/trip",
+    "sendHeaders": true,
+    "headerParameters": {
+     "parameters": [
+      {
+       "name": "X-Timestamp",
+       "value": "={{ $json.ts }}"
+      },
+      {
+       "name": "X-Signature",
+       "value": "={{ $json.sig }}"
+      }
+     ]
+    },
+    "sendBody": true,
+    "contentType": "raw",
+    "rawContentType": "application/json",
+    "body": "={{ $json.body }}"
+   }
+  },
+  {
+   "id": "confirm",
+   "name": "Confirm",
+   "type": "n8n-nodes-base.telegram",
+   "typeVersion": 1.2,
+   "position": [
+    880,
+    300
+   ],
+   "parameters": {
+    "chatId": "={{ $('Telegram /kill').item.json.message.chat.id }}",
+    "text": "=Kill switch: {{ $json.status }}"
+   },
+   "credentials": {
+    "telegramApi": {
+     "id": "1",
+     "name": "Desk Telegram bot"
+    }
+   }
+  }
+ ],
+ "connections": {
+  "Telegram /kill": {
+   "main": [
+    [
+     {
+      "node": "Sender allowed?",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Sender allowed?": {
+   "main": [
+    [
+     {
+      "node": "Sign request",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Sign request": {
+   "main": [
+    [
+     {
+      "node": "Trip kill switch",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Trip kill switch": {
+   "main": [
+    [
+     {
+      "node": "Confirm",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "active": false,
+ "settings": {
+  "timezone": "America/New_York",
+  "errorWorkflow": "error_alert"
+ }
+}
