@@ -46,6 +46,11 @@ def convert(md: str) -> tuple[str, list[tuple[int, str, str]]]:
             out.append(f'<pre class="lang-{fence or "text"}"><code>{html.escape(chr(10).join(buf))}</code></pre>')
             continue
         if line.startswith("$$"):
+            rest = line[2:]
+            if rest.endswith("$$") and rest.strip("$").strip():           # both delimiters on one line
+                out.append(f'<div class="formula">{html.escape(rest[:-2].strip())}</div>')
+                i += 1
+                continue
             buf = []
             i += 1
             while i < len(lines) and not lines[i].startswith("$$"):
