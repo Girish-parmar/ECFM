@@ -35,9 +35,17 @@ def table_html(rows: list[str]) -> str:
 def convert(md: str) -> tuple[str, list[tuple[int, str, str]]]:
     lines = md.split("\n")
     out, toc, i, in_code, in_list = [], [], 0, False, None
+    para_buf: list[str] = []
+
+    def flush_para():
+        if para_buf:
+            out.append(f"<p>{inline(' '.join(para_buf))}</p>")
+            para_buf.clear()
+
     while i < len(lines):
         line = lines[i]
         if line.startswith("```"):
+            flush_para()
             fence, buf = line[3:].strip(), []
             i += 1
             while i < len(lines) and not lines[i].startswith("```"):
@@ -46,6 +54,7 @@ def convert(md: str) -> tuple[str, list[tuple[int, str, str]]]:
             out.append(f'<pre class="lang-{fence or "text"}"><code>{html.escape(chr(10).join(buf))}</code></pre>')
             continue
         if line.startswith("$$"):
+            flush_para()
             rest = line[2:]
             if rest.endswith("$$") and rest.strip("$").strip():           # both delimiters on one line
                 out.append(f'<div class="formula">{html.escape(rest[:-2].strip())}</div>')
@@ -60,6 +69,7 @@ def convert(md: str) -> tuple[str, list[tuple[int, str, str]]]:
             continue
         m = re.match(r"^(#{1,4})\s+(.*)$", line)
         if m:
+            flush_para()
             level, text = len(m.group(1)), m.group(2).strip()
             anchor = slug(text)
             out.append(f'<h{level} id="{anchor}">{inline(text)}</h{level}>')
@@ -67,20 +77,24 @@ def convert(md: str) -> tuple[str, list[tuple[int, str, str]]]:
             i += 1
             continue
         if line.strip() == "---":
+            flush_para()
             out.append("<hr/>"); i += 1; continue
         if line.strip().startswith("|") and i + 1 < len(lines) and re.match(r"^\s*\|?[\s:-]+\|", lines[i + 1]):
+            flush_para()
             rows = []
             while i < len(lines) and lines[i].strip().startswith("|"):
                 rows.append(lines[i]); i += 1
             out.append(table_html(rows))
             continue
         if re.match(r"^>\s?", line):
+            flush_para()
             buf = []
             while i < len(lines) and re.match(r"^>\s?", lines[i]):
                 buf.append(re.sub(r"^>\s?", "", lines[i])); i += 1
             out.append(f'<blockquote>{"<br/>".join(inline(b) for b in buf)}</blockquote>')
             continue
         if re.match(r"^\s*[-*]\s+\[[ xX]\]\s+", line):
+            flush_para()
             if in_list != "cb":
                 if in_list:
                     out.append(f"</{in_list}>")
@@ -92,6 +106,7 @@ def convert(md: str) -> tuple[str, list[tuple[int, str, str]]]:
             i += 1
             continue
         if re.match(r"^\s*[-*]\s+", line):
+            flush_para()
             if in_list != "ul":
                 if in_list:
                     out.append(f"</{in_list}>")
@@ -101,6 +116,7 @@ def convert(md: str) -> tuple[str, list[tuple[int, str, str]]]:
             i += 1
             continue
         if re.match(r"^\s*\d+\.\s+", line):
+            flush_para()
             if in_list != "ol":
                 if in_list:
                     out.append(f"</{in_list}>")
@@ -112,9 +128,14 @@ def convert(md: str) -> tuple[str, list[tuple[int, str, str]]]:
         if in_list and line.strip() == "":
             out.append(f"</{in_list}>"); in_list = None
         if line.strip() == "":
+            flush_para()
             i += 1; continue
-        out.append(f"<p>{inline(line.strip())}</p>")
+        if in_list:
+            flush_para()
+            out.append(f"</{in_list}>"); in_list = None
+        para_buf.append(line.strip())
         i += 1
+    flush_para()
     if in_list:
         out.append(f"</{in_list}>")
     return "\n".join(out), toc
