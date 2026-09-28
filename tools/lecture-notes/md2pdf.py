@@ -8,13 +8,128 @@ import re
 import sys
 from pathlib import Path
 
+# ---------------------------------------------------------------------------
+# Plain-text math cleanup: this converter has no MathJax/KaTeX (no network
+# access to a CDN at render time), so any $...$ / $$...$$ content must be
+# turned into readable plain text ourselves rather than left as raw LaTeX
+# source (which renders as literal, broken-looking backslash-commands).
+# ---------------------------------------------------------------------------
+GREEK = {
+    "alpha": "α", "beta": "β", "gamma": "γ", "Gamma": "Γ", "delta": "δ", "Delta": "Δ",
+    "epsilon": "ε", "zeta": "ζ", "eta": "η", "theta": "θ", "Theta": "Θ", "iota": "ι",
+    "kappa": "κ", "lambda": "λ", "Lambda": "Λ", "mu": "μ", "nu": "ν", "xi": "ξ",
+    "pi": "π", "Pi": "Π", "rho": "ρ", "sigma": "σ", "Sigma": "Σ", "tau": "τ",
+    "upsilon": "υ", "phi": "φ", "Phi": "Φ", "chi": "χ", "psi": "ψ", "omega": "ω", "Omega": "Ω",
+}
+SYMBOLS = [
+    (r"\top", "ᵀ"), (r"\times", "×"), (r"\cdot", "·"), (r"\ln", "ln"),
+    (r"\max", "max"), (r"\min", "min"), (r"\qquad", "    "), (r"\quad", "  "),
+    (r"\longrightarrow", "→"), (r"\rightarrow", "→"),
+    (r"\infty", "∞"), (r"\geq", "≥"), (r"\leq", "≤"), (r"\neq", "≠"),
+    (r"\approx", "≈"), (r"\pm", "±"), (r"\div", "÷"), (r"\sum", "Σ"), (r"\prod", "Π"),
+    (r"\forall", "∀"), (r"\ldots", "…"), (r"\dots", "…"),
+    (r"\,", " "), (r"\!", ""), (r"\;", " "),
+]
+
+
+def _find_balanced(s: str, start: int) -> tuple[str, int]:
+    """s[start] must be '{'. Returns (content, index just after the matching '}')."""
+    depth = 0
+    for i in range(start, len(s)):
+        if s[i] == "{":
+            depth += 1
+        elif s[i] == "}":
+            depth -= 1
+            if depth == 0:
+                return s[start + 1:i], i + 1
+    return s[start + 1:], len(s)
+
+
+def _replace_command_with_groups(s: str, command: str, n_groups: int, template: str) -> str:
+    """Replace \\command{g1}{g2}... with template.format(g1, g2, ...), balanced-brace aware."""
+    out, i = [], 0
+    while True:
+        j = s.find(command, i)
+        if j == -1:
+            out.append(s[i:])
+            break
+        out.append(s[i:j])
+        pos, groups, ok = j + len(command), [], True
+        for _ in range(n_groups):
+            while pos < len(s) and s[pos] in " \t":
+                pos += 1
+            if pos >= len(s) or s[pos] != "{":
+                ok = False
+                break
+            content, pos = _find_balanced(s, pos)
+            groups.append(content)
+        out.append(template.format(*groups) if ok else command)
+        i = pos if ok else j + len(command)
+    return "".join(out)
+
+
+def _convert_matrix(m: re.Match) -> str:
+    rows = [r.strip() for r in m.group(1).strip().split("\\\\") if r.strip()]
+    row_strs = ["  ".join(c.strip() for c in r.split("&")) for r in rows]
+    return "[ " + "  ;  ".join(row_strs) + " ]"
+
+
+def _unwrap_braces(s: str) -> str:
+    """^{...} and _{...} -> ^(...) and _(...), balanced-brace aware."""
+    for marker in ("^", "_"):
+        out, i = [], 0
+        while True:
+            j = s.find(marker + "{", i)
+            if j == -1:
+                out.append(s[i:])
+                break
+            out.append(s[i:j])
+            content, pos = _find_balanced(s, j + 1)
+            out.append(marker + "(" + content + ")")
+            i = pos
+        s = "".join(out)
+    return s
+
+
+def clean_math(s: str) -> str:
+    """Turn a raw LaTeX-ish snippet into readable plain text (no renderer available)."""
+    s = re.sub(r"\\begin\{[pb]matrix\}(.*?)\\end\{[pb]matrix\}", _convert_matrix, s, flags=re.S)
+    s = _replace_command_with_groups(s, r"\text", 1, "{0}")
+    s = _replace_command_with_groups(s, r"\frac", 2, "({0})/({1})")
+    s = _replace_command_with_groups(s, r"\sqrt", 1, "√({0})")
+    s = re.sub(r"\\sqrt(?!\()", "√", s)
+    s = re.sub(r"\\left([(){}\[\]|.])", r"\1", s)
+    s = re.sub(r"\\right([(){}\[\]|.])", r"\1", s)
+    for pat, rep in SYMBOLS:
+        s = s.replace(pat, rep)
+    s = re.sub(r"\\to(?![a-zA-Z])", "→", s)
+    s = re.sub(r"\\in(?=[ (])", "∈", s)
+    for name, sym in sorted(GREEK.items(), key=lambda x: -len(x[0])):
+        s = re.sub(r"\\" + name + r"(?![a-zA-Z])", sym, s)
+    s = _unwrap_braces(s)
+    s = s.replace("\\%", "%").replace("\\$", "$").replace("\\&", "&")
+    s = s.replace("\\\\", " | ")
+    s = re.sub(r"[ \t]+", " ", s).strip()
+    return s
+
 
 def inline(s: str) -> str:
+    # Stash inline $...$ math spans that contain a backslash command (i.e. are
+    # unambiguously LaTeX, not a currency amount like "$100.00") before escaping.
+    math_spans: list[str] = []
+
+    def _stash(m: re.Match) -> str:
+        math_spans.append(clean_math(m.group(1)))
+        return f"\x00MATH{len(math_spans) - 1}\x00"
+
+    s = re.sub(r"\$([^$\n]*\\[^$\n]*)\$", _stash, s)
     s = html.escape(s, quote=False)
     s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
     s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
     s = re.sub(r"(?<!\*)\*(?!\*)([^*]+?)\*(?!\*)", r"<em>\1</em>", s)
     s = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', s)
+    for idx, cleaned in enumerate(math_spans):
+        s = s.replace(f"\x00MATH{idx}\x00", f'<span class="mathi">{html.escape(cleaned, quote=False)}</span>')
     return s
 
 
@@ -57,7 +172,7 @@ def convert(md: str) -> tuple[str, list[tuple[int, str, str]]]:
             flush_para()
             rest = line[2:]
             if rest.endswith("$$") and rest.strip("$").strip():           # both delimiters on one line
-                out.append(f'<div class="formula">{html.escape(rest[:-2].strip())}</div>')
+                out.append(f'<div class="formula">{html.escape(clean_math(rest[:-2].strip()), quote=False)}</div>')
                 i += 1
                 continue
             buf = []
@@ -65,7 +180,7 @@ def convert(md: str) -> tuple[str, list[tuple[int, str, str]]]:
             while i < len(lines) and not lines[i].startswith("$$"):
                 buf.append(lines[i]); i += 1
             i += 1
-            out.append(f'<div class="formula">{html.escape(chr(10).join(buf).strip())}</div>')
+            out.append(f'<div class="formula">{html.escape(clean_math(chr(10).join(buf).strip()), quote=False)}</div>')
             continue
         m = re.match(r"^(#{1,4})\s+(.*)$", line)
         if m:
@@ -156,6 +271,7 @@ code { background: #f0efe9; border-radius: 3px; padding: 1px 4px; font-family: '
 pre { background: #f5f4f0; border: 1px solid #ddd; border-radius: 5px; padding: 10px; overflow-x: auto; page-break-inside: avoid; }
 pre code { background: none; padding: 0; font-size: 10.5px; line-height: 1.4; }
 .formula { background: #eef3fa; border-left: 3px solid #2a78d6; padding: 10px 14px; margin: 10px 0; font-family: 'Cambria Math', Georgia, serif; font-size: 13px; text-align: center; }
+.mathi { font-family: 'Cambria Math', Georgia, serif; font-style: italic; }
 table { border-collapse: collapse; width: 100%; margin: 10px 0 16px; page-break-inside: avoid; font-size: 11px; }
 th, td { border: 1px solid #cfcdc6; padding: 5px 7px; text-align: left; vertical-align: top; }
 th { background: #16325c; color: #fff; font-family: Arial, sans-serif; font-size: 10.5px; }
