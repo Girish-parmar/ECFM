@@ -95,6 +95,11 @@ def clean_math(s: str) -> str:
     """Turn a raw LaTeX-ish snippet into readable plain text (no renderer available)."""
     s = re.sub(r"\\begin\{[pb]matrix\}(.*?)\\end\{[pb]matrix\}", _convert_matrix, s, flags=re.S)
     s = _replace_command_with_groups(s, r"\text", 1, "{0}")
+    s = _replace_command_with_groups(s, r"\mathbf", 1, "{0}")
+    s = _replace_command_with_groups(s, r"\mathbb", 1, "{0}")
+    s = _replace_command_with_groups(s, r"\mathrm", 1, "{0}")
+    s = _replace_command_with_groups(s, r"\boldsymbol", 1, "{0}")
+    s = _replace_command_with_groups(s, r"\operatorname", 1, "{0}")
     s = _replace_command_with_groups(s, r"\frac", 2, "({0})/({1})")
     s = _replace_command_with_groups(s, r"\sqrt", 1, "√({0})")
     s = re.sub(r"\\sqrt(?!\()", "√", s)
