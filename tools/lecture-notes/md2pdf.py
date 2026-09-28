@@ -28,7 +28,9 @@ SYMBOLS = [
     (r"\Longrightarrow", "⇒"), (r"\Rightarrow", "⇒"),
     (r"\Longleftarrow", "⇐"), (r"\Leftarrow", "⇐"), (r"\leftarrow", "←"),
     (r"\Leftrightarrow", "⇔"), (r"\leftrightarrow", "↔"),
-    (r"\infty", "∞"), (r"\geq", "≥"), (r"\leq", "≤"), (r"\neq", "≠"), (r"\ge", "≥"), (r"\le", "≤"),
+    (r"\infty", "∞"), (r"\geq", "≥"), (r"\leq", "≤"), (r"\neq", "≠"),
+    (r"\lfloor", "⌊"), (r"\rfloor", "⌋"), (r"\lceil", "⌈"), (r"\rceil", "⌉"),
+    (r"\ge", "≥"), (r"\le", "≤"),
     (r"\approx", "≈"), (r"\pm", "±"), (r"\div", "÷"), (r"\sum", "Σ"), (r"\prod", "Π"),
     (r"\forall", "∀"), (r"\ldots", "…"), (r"\dots", "…"),
     (r"\,", " "), (r"\!", ""), (r"\;", " "),
@@ -113,6 +115,12 @@ def clean_math(s: str) -> str:
     s = re.sub(r"\\sqrt(?!\()", "√", s)
     s = re.sub(r"\\left([(){}\[\]|.])", r"\1", s)
     s = re.sub(r"\\right([(){}\[\]|.])", r"\1", s)
+    # \left/\right before another delimiter *command* (e.g. "\left\lfloor"), rather
+    # than a literal bracket char: drop the sizing command, keep the delimiter
+    # command itself for SYMBOLS to convert next. Must run before "\le"/"\ge" below,
+    # since "\left"/"\right" would otherwise be mis-matched by their "\le" prefix.
+    s = re.sub(r"\\left(?=\\)", "", s)
+    s = re.sub(r"\\right(?=\\)", "", s)
     for pat, rep in SYMBOLS:
         s = s.replace(pat, rep)
     s = re.sub(r"\\to(?![a-zA-Z])", "→", s)
@@ -161,11 +169,14 @@ def inline(s: str) -> str:
 
     s = re.sub(r"(?<!\\)\$((?:\\\$|[^$\n])+?)(?<!\\)\$", _stash, s)
     s = html.escape(s, quote=False)
-    for idx, code in enumerate(code_spans):
-        s = s.replace(f"\x00CODE{idx}\x00", f"<code>{html.escape(code, quote=False)}</code>")
+    # Bold/italic/link processing must happen while code spans are still stashed:
+    # restoring "**kwargs**"-style code content first would expose a literal "**"
+    # that the bold regex below would then wrongly reinterpret as markup.
     s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
     s = re.sub(r"(?<!\*)\*(?!\*)([^*]+?)\*(?!\*)", r"<em>\1</em>", s)
     s = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', s)
+    for idx, code in enumerate(code_spans):
+        s = s.replace(f"\x00CODE{idx}\x00", f"<code>{html.escape(code, quote=False)}</code>")
     for idx, cleaned in enumerate(math_spans):
         s = s.replace(f"\x00MATH{idx}\x00", f'<span class="mathi">{html.escape(cleaned, quote=False)}</span>')
     return s
