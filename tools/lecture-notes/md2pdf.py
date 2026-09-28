@@ -22,13 +22,18 @@ GREEK = {
     "upsilon": "υ", "phi": "φ", "Phi": "Φ", "chi": "χ", "psi": "ψ", "omega": "ω", "Omega": "Ω",
 }
 SYMBOLS = [
-    (r"\top", "ᵀ"), (r"\times", "×"), (r"\cdot", "·"), (r"\ln", "ln"),
+    (r"\top", "ᵀ"), (r"\times", "×"), (r"\cdot", "·"), (r"\ln", "ln"), (r"\exp", "exp"),
     (r"\max", "max"), (r"\min", "min"), (r"\qquad", "    "), (r"\quad", "  "),
     (r"\longrightarrow", "→"), (r"\rightarrow", "→"),
+    (r"\Longrightarrow", "⇒"), (r"\Rightarrow", "⇒"),
+    (r"\Longleftarrow", "⇐"), (r"\Leftarrow", "⇐"), (r"\leftarrow", "←"),
+    (r"\Leftrightarrow", "⇔"), (r"\leftrightarrow", "↔"),
     (r"\infty", "∞"), (r"\geq", "≥"), (r"\leq", "≤"), (r"\neq", "≠"),
-    (r"\approx", "≈"), (r"\pm", "±"), (r"\div", "÷"), (r"\sum", "Σ"), (r"\prod", "Π"),
+    (r"\lfloor", "⌊"), (r"\rfloor", "⌋"), (r"\lceil", "⌈"), (r"\rceil", "⌉"),
+    (r"\ge", "≥"), (r"\le", "≤"),
+    (r"\approx", "≈"), (r"\sim", "~"), (r"\pm", "±"), (r"\div", "÷"), (r"\sum", "Σ"), (r"\prod", "Π"),
     (r"\forall", "∀"), (r"\ldots", "…"), (r"\dots", "…"),
-    (r"\,", " "), (r"\!", ""), (r"\;", " "),
+    (r"\,", " "), (r"\!", ""), (r"\;", " "), (r"\ ", " "),
 ]
 
 
@@ -100,22 +105,32 @@ def clean_math(s: str) -> str:
     s = _replace_command_with_groups(s, r"\mathrm", 1, "{0}")
     s = _replace_command_with_groups(s, r"\boldsymbol", 1, "{0}")
     s = _replace_command_with_groups(s, r"\operatorname", 1, "{0}")
-    s = _replace_command_with_groups(s, r"\bar", 1, "{0}\u0304")
-    s = _replace_command_with_groups(s, r"\hat", 1, "{0}\u0302")
-    s = _replace_command_with_groups(s, r"\overline", 1, "{0}\u0304")
-    s = re.sub(r"\\bar\s*([a-zA-Z])", lambda m: m.group(1) + "\u0304", s)
-    s = re.sub(r"\\hat\s*([a-zA-Z])", lambda m: m.group(1) + "\u0302", s)
+    s = _replace_command_with_groups(s, r"\bar", 1, "{0}̄")
+    s = _replace_command_with_groups(s, r"\hat", 1, "{0}̂")
+    s = _replace_command_with_groups(s, r"\overline", 1, "{0}̄")
     s = _replace_command_with_groups(s, r"\frac", 2, "({0})/({1})")
+    s = _replace_command_with_groups(s, r"\tfrac", 2, "({0})/({1})")
+    s = _replace_command_with_groups(s, r"\dfrac", 2, "({0})/({1})")
     s = _replace_command_with_groups(s, r"\sqrt", 1, "√({0})")
     s = re.sub(r"\\sqrt(?!\()", "√", s)
     s = re.sub(r"\\left([(){}\[\]|.])", r"\1", s)
     s = re.sub(r"\\right([(){}\[\]|.])", r"\1", s)
+    # \left/\right before another delimiter *command* (e.g. "\left\lfloor"), rather
+    # than a literal bracket char: drop the sizing command, keep the delimiter
+    # command itself for SYMBOLS to convert next. Must run before "\le"/"\ge" below,
+    # since "\left"/"\right" would otherwise be mis-matched by their "\le" prefix.
+    s = re.sub(r"\\left(?=\\)", "", s)
+    s = re.sub(r"\\right(?=\\)", "", s)
     for pat, rep in SYMBOLS:
         s = s.replace(pat, rep)
     s = re.sub(r"\\to(?![a-zA-Z])", "→", s)
     s = re.sub(r"\\in(?=[ (])", "∈", s)
     for name, sym in sorted(GREEK.items(), key=lambda x: -len(x[0])):
         s = re.sub(r"\\" + name + r"(?![a-zA-Z])", sym, s)
+    # Bare (unbraced) \bar/\hat run after Greek substitution so "\hat\beta" (already
+    # turned into "\hatβ" above) is caught too, not just "\hat b".
+    s = re.sub(r"\\bar\s*([a-zA-Zα-ωΑ-Ω])", lambda m: m.group(1) + "\u0304", s)
+    s = re.sub(r"\\hat\s*([a-zA-Zα-ωΑ-Ω])", lambda m: m.group(1) + "\u0302", s)
     s = _unwrap_braces(s)
     s = s.replace("\\%", "%").replace("\\$", "$").replace("\\&", "&")
     s = s.replace("\\\\", " | ")
@@ -123,21 +138,45 @@ def clean_math(s: str) -> str:
     return s
 
 
+_CURRENCY_RE = re.compile(r"[\d,]+(\.\d+)?%?")
+
+
 def inline(s: str) -> str:
-    # Stash inline $...$ math spans that contain a backslash command (i.e. are
-    # unambiguously LaTeX, not a currency amount like "$100.00") before escaping.
+    # Stash inline `code` spans first so a literal "$" inside one (e.g. "`$0.005`")
+    # can never be treated as the start/end of a math span together with a $ in
+    # a *different*, later code span on the same line.
+    code_spans: list[str] = []
+
+    def _stash_code(m: re.Match) -> str:
+        code_spans.append(m.group(1))
+        return f"\x00CODE{len(code_spans) - 1}\x00"
+
+    s = re.sub(r"`([^`]+)`", _stash_code, s)
+
+    # Stash inline $...$ spans before escaping. A span that is purely a numeric
+    # amount (e.g. "$100.00", "$1,000", "$22%") is left untouched as currency;
+    # everything else (a backslash command, or a bare symbol/expression like
+    # "$q$", "$H=0.5$", "$VR<1$") is treated as math and cleaned to plain text
+    # with the $ delimiters dropped, so it doesn't render with literal $ clutter.
     math_spans: list[str] = []
 
     def _stash(m: re.Match) -> str:
-        math_spans.append(clean_math(m.group(1)))
+        span = m.group(1)
+        if _CURRENCY_RE.fullmatch(span.strip()):
+            return m.group(0)
+        math_spans.append(clean_math(span))
         return f"\x00MATH{len(math_spans) - 1}\x00"
 
-    s = re.sub(r"\$([^$\n]*\\[^$\n]*)\$", _stash, s)
+    s = re.sub(r"(?<!\\)\$((?:\\\$|[^$\n])+?)(?<!\\)\$", _stash, s)
     s = html.escape(s, quote=False)
-    s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
+    # Bold/italic/link processing must happen while code spans are still stashed:
+    # restoring "**kwargs**"-style code content first would expose a literal "**"
+    # that the bold regex below would then wrongly reinterpret as markup.
     s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
     s = re.sub(r"(?<!\*)\*(?!\*)([^*]+?)\*(?!\*)", r"<em>\1</em>", s)
     s = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', s)
+    for idx, code in enumerate(code_spans):
+        s = s.replace(f"\x00CODE{idx}\x00", f"<code>{html.escape(code, quote=False)}</code>")
     for idx, cleaned in enumerate(math_spans):
         s = s.replace(f"\x00MATH{idx}\x00", f'<span class="mathi">{html.escape(cleaned, quote=False)}</span>')
     return s
