@@ -123,16 +123,25 @@ def clean_math(s: str) -> str:
     return s
 
 
+_CURRENCY_RE = re.compile(r"[\d,]+(\.\d+)?%?")
+
+
 def inline(s: str) -> str:
-    # Stash inline $...$ math spans that contain a backslash command (i.e. are
-    # unambiguously LaTeX, not a currency amount like "$100.00") before escaping.
+    # Stash inline $...$ spans before escaping. A span that is purely a numeric
+    # amount (e.g. "$100.00", "$1,000", "$22%") is left untouched as currency;
+    # everything else (a backslash command, or a bare symbol/expression like
+    # "$q$", "$H=0.5$", "$VR<1$") is treated as math and cleaned to plain text
+    # with the $ delimiters dropped, so it doesn't render with literal $ clutter.
     math_spans: list[str] = []
 
     def _stash(m: re.Match) -> str:
-        math_spans.append(clean_math(m.group(1)))
+        span = m.group(1)
+        if _CURRENCY_RE.fullmatch(span.strip()):
+            return m.group(0)
+        math_spans.append(clean_math(span))
         return f"\x00MATH{len(math_spans) - 1}\x00"
 
-    s = re.sub(r"\$([^$\n]*\\[^$\n]*)\$", _stash, s)
+    s = re.sub(r"\$([^$\n]+)\$", _stash, s)
     s = html.escape(s, quote=False)
     s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
     s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
