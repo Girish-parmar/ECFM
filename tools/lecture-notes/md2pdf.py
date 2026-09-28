@@ -28,7 +28,7 @@ SYMBOLS = [
     (r"\Longrightarrow", "⇒"), (r"\Rightarrow", "⇒"),
     (r"\Longleftarrow", "⇐"), (r"\Leftarrow", "⇐"), (r"\leftarrow", "←"),
     (r"\Leftrightarrow", "⇔"), (r"\leftrightarrow", "↔"),
-    (r"\infty", "∞"), (r"\geq", "≥"), (r"\leq", "≤"), (r"\neq", "≠"),
+    (r"\infty", "∞"), (r"\geq", "≥"), (r"\leq", "≤"), (r"\neq", "≠"), (r"\ge", "≥"), (r"\le", "≤"),
     (r"\approx", "≈"), (r"\pm", "±"), (r"\div", "÷"), (r"\sum", "Σ"), (r"\prod", "Π"),
     (r"\forall", "∀"), (r"\ldots", "…"), (r"\dots", "…"),
     (r"\,", " "), (r"\!", ""), (r"\;", " "),
