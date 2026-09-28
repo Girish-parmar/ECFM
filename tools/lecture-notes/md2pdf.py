@@ -22,7 +22,7 @@ GREEK = {
     "upsilon": "υ", "phi": "φ", "Phi": "Φ", "chi": "χ", "psi": "ψ", "omega": "ω", "Omega": "Ω",
 }
 SYMBOLS = [
-    (r"\top", "ᵀ"), (r"\times", "×"), (r"\cdot", "·"), (r"\ln", "ln"),
+    (r"\top", "ᵀ"), (r"\times", "×"), (r"\cdot", "·"), (r"\ln", "ln"), (r"\exp", "exp"),
     (r"\max", "max"), (r"\min", "min"), (r"\qquad", "    "), (r"\quad", "  "),
     (r"\longrightarrow", "→"), (r"\rightarrow", "→"),
     (r"\Longrightarrow", "⇒"), (r"\Rightarrow", "⇒"),
@@ -103,12 +103,12 @@ def clean_math(s: str) -> str:
     s = _replace_command_with_groups(s, r"\mathrm", 1, "{0}")
     s = _replace_command_with_groups(s, r"\boldsymbol", 1, "{0}")
     s = _replace_command_with_groups(s, r"\operatorname", 1, "{0}")
-    s = _replace_command_with_groups(s, r"\bar", 1, "{0}\u0304")
-    s = _replace_command_with_groups(s, r"\hat", 1, "{0}\u0302")
-    s = _replace_command_with_groups(s, r"\overline", 1, "{0}\u0304")
-    s = re.sub(r"\\bar\s*([a-zA-Z])", lambda m: m.group(1) + "\u0304", s)
-    s = re.sub(r"\\hat\s*([a-zA-Z])", lambda m: m.group(1) + "\u0302", s)
+    s = _replace_command_with_groups(s, r"\bar", 1, "{0}̄")
+    s = _replace_command_with_groups(s, r"\hat", 1, "{0}̂")
+    s = _replace_command_with_groups(s, r"\overline", 1, "{0}̄")
     s = _replace_command_with_groups(s, r"\frac", 2, "({0})/({1})")
+    s = _replace_command_with_groups(s, r"\tfrac", 2, "({0})/({1})")
+    s = _replace_command_with_groups(s, r"\dfrac", 2, "({0})/({1})")
     s = _replace_command_with_groups(s, r"\sqrt", 1, "√({0})")
     s = re.sub(r"\\sqrt(?!\()", "√", s)
     s = re.sub(r"\\left([(){}\[\]|.])", r"\1", s)
@@ -119,6 +119,10 @@ def clean_math(s: str) -> str:
     s = re.sub(r"\\in(?=[ (])", "∈", s)
     for name, sym in sorted(GREEK.items(), key=lambda x: -len(x[0])):
         s = re.sub(r"\\" + name + r"(?![a-zA-Z])", sym, s)
+    # Bare (unbraced) \bar/\hat run after Greek substitution so "\hat\beta" (already
+    # turned into "\hatβ" above) is caught too, not just "\hat b".
+    s = re.sub(r"\\bar\s*([a-zA-Zα-ωΑ-Ω])", lambda m: m.group(1) + "\u0304", s)
+    s = re.sub(r"\\hat\s*([a-zA-Zα-ωΑ-Ω])", lambda m: m.group(1) + "\u0302", s)
     s = _unwrap_braces(s)
     s = s.replace("\\%", "%").replace("\\$", "$").replace("\\&", "&")
     s = s.replace("\\\\", " | ")
