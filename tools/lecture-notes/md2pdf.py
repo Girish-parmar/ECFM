@@ -134,6 +134,17 @@ _CURRENCY_RE = re.compile(r"[\d,]+(\.\d+)?%?")
 
 
 def inline(s: str) -> str:
+    # Stash inline `code` spans first so a literal "$" inside one (e.g. "`$0.005`")
+    # can never be treated as the start/end of a math span together with a $ in
+    # a *different*, later code span on the same line.
+    code_spans: list[str] = []
+
+    def _stash_code(m: re.Match) -> str:
+        code_spans.append(m.group(1))
+        return f"\x00CODE{len(code_spans) - 1}\x00"
+
+    s = re.sub(r"`([^`]+)`", _stash_code, s)
+
     # Stash inline $...$ spans before escaping. A span that is purely a numeric
     # amount (e.g. "$100.00", "$1,000", "$22%") is left untouched as currency;
     # everything else (a backslash command, or a bare symbol/expression like
@@ -148,9 +159,10 @@ def inline(s: str) -> str:
         math_spans.append(clean_math(span))
         return f"\x00MATH{len(math_spans) - 1}\x00"
 
-    s = re.sub(r"\$([^$\n]+)\$", _stash, s)
+    s = re.sub(r"(?<!\\)\$((?:\\\$|[^$\n])+?)(?<!\\)\$", _stash, s)
     s = html.escape(s, quote=False)
-    s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
+    for idx, code in enumerate(code_spans):
+        s = s.replace(f"\x00CODE{idx}\x00", f"<code>{html.escape(code, quote=False)}</code>")
     s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
     s = re.sub(r"(?<!\*)\*(?!\*)([^*]+?)\*(?!\*)", r"<em>\1</em>", s)
     s = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', s)
